@@ -28,31 +28,34 @@ def list_bucket(collective):
 
     page_size = 10
     stats = gcs.listbucket(bucket, max_keys=page_size)
-    print '---------------------- stats'
 
+    files = []
     while True:
         count = 0
         for stat in stats:
             count += 1
-            print repr(stat)
+            stat.filename = stat.filename.split('/')[-1]
+            files.append(stat)
+            # print stat
             # self.response.write(repr(stat))
             # self.response.write('\n')
 
         if count != page_size or count == 0:
             break
-        stats = gcs.listbucket(bucket, max_keys=page_size,
-                               marker=stat.filename)
-    print stats
-    return stats
+        # stats = gcs.listbucket(bucket, max_keys=page_size,
+        #                        marker=stat.filename)
+    return files
 
 
 class Antares(View):
     def dispatch_request(self):
-        list_bucket()
         # examples = ExampleModel.query()
 
         collective = {'name': 'Антарес', 'bucket': 'antares'}
-        print collective['bucket']
+        files = list_bucket(collective['bucket'])
+        for file in files:
+            print file
+
         return render_template('collectives/collective.html', stats=list_bucket(collective['bucket']),
                                collective=collective)
 

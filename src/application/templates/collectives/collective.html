@@ -13,35 +13,33 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Added by</th>
-                <th>Added on</th>
+                <th>Название</th>
+                <th>Размер</th>
+                <th>Time</th>
+                <th>Добавлен</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            {% for example in examples %}
-            {% set example_id = example.key.id() %}
+            {% for stat in stats %}
+{#            {% set example_id = example.key.id() %}#}
             <tr>
-                <td>{{ example_id }}</td>
-                <td>{{ example.example_name }}</td>
-                <td>{{ example.example_description }}</td>
-                <td>{{ example.added_by }}</td>
-                <td class="nowrap">{{ example.timestamp.strftime('%b %d, %Y %I:%M %p') }}</td>
+                <td>{{ stat.filename }}</td>
+                <td>{{ stat.st_size }}</td>
+                <td>{{ stat.st_ctime }}</td>
+{#                <td class="nowrap">{{ stat.st_ctime.strftime('%b %d, %Y %I:%M %p') }}</td>#}
                 <td>
-                    <a href="{{ url_for('edit_example', example_id=example_id) }}" class="btn">Edit</a>
+{#                    <a href="{{ url_for('edit_example', example_id=example_id) }}" class="btn">Edit</a>#}
                 </td>
                 <td>
-                    <form method="post" action="{{ url_for('delete_example', example_id=example_id) }}">
-                        <button class="btn">Delete</button>
-                    </form>
+{#                    <form method="post" action="{{ url_for('delete_example', stat_id=stat.etag) }}">#}
+{#                        <button class="btn">Удалить</button>#}
+{#                    </form>#}
                 </td>
             </tr>
             {% else %}
-            <tr><td colspan="7">No examples yet</td></tr>
+            <tr><td colspan="7">Пока нет музыки</td></tr>
             {% endfor %}
         </tbody>
     </table>
