@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import flask
 from flask.views import View
 
 from flask import flash, redirect, url_for, render_template
 
 from google.appengine.api import users
+from google.appengine.ext import blobstore
 from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 from forms import ExampleForm
@@ -12,11 +14,14 @@ from models import ExampleModel
 
 from decorators import login_required
 
+import cloudstorage as gcs
+
+
 
 class AdminListExamples(View):
-
-    @login_required
+    # @login_required
     def dispatch_request(self):
+        upload_url = blobstore.create_upload_url('/upload')
         examples = ExampleModel.query()
         form = ExampleForm()
         if form.validate_on_submit():
@@ -33,4 +38,4 @@ class AdminListExamples(View):
             except CapabilityDisabledError:
                 flash(u'App Engine Datastore is currently in read-only mode.', 'info')
                 return redirect(url_for('list_examples'))
-        return render_template('list_examples.html', examples=examples, form=form)
+        return render_template('list_examples.html', examples=examples, form=form, uploadUrl=upload_url)

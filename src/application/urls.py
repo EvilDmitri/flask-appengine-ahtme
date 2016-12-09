@@ -20,7 +20,8 @@ from application.views.admin.admin_delete_example import AdminDeleteExample
 
 
 import application.views.public.collectives as Collectives
-# from application.views.public.collectives import Antares
+
+from application.views.public.upload_file import UploadFile
 
 # URL dispatch rules
 
@@ -48,6 +49,10 @@ app.add_url_rule('/arlekin', 'arlekin', view_func=Collectives.Arlekin.as_view('a
 app.add_url_rule('/step', 'step', view_func=Collectives.Step.as_view('step'))
 app.add_url_rule('/viva', 'viva', view_func=Collectives.Viva.as_view('viva'))
 app.add_url_rule('/smirnov', 'smirnov', view_func=Collectives.Smirnov.as_view('smirnov'))
+
+app.add_url_rule('/upload', 'upload', view_func=UploadFile.as_view('upload'), methods=['POST'])
+
+
 
 # Error handlers
 

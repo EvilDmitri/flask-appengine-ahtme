@@ -45,11 +45,22 @@
             {% endfor %}
         </tbody>
     </table>
+{#    <p>#}
+{#        <a class="btn btn-primary" data-toggle="modal" data-target="#new-example-modal">#}
+{#            <i class="icon-plus-sign icon-white"></i>#}
+{#            New example#}
+{#        </a>#}
+{#    </p>#}
+
     <p>
-        <a class="btn btn-primary" data-toggle="modal" data-target="#new-example-modal">
-            <i class="icon-plus-sign icon-white"></i>
-            New example
-        </a>
+        <form action="{{ url_for('upload', collective= collective.bucket)}}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload File:</label>
+                <input type="file" id="file" name="file" class="form-control">
+                <button type="submit" class="btn btn-success">Загрузить</button>
+    {#            <input type="submit" name="submit" value="Submit">#}
+            </div>
+        </form>
     </p>
 
 
